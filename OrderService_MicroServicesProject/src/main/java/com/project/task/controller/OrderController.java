@@ -46,8 +46,10 @@ public class OrderController {
 	@GetMapping("/place/{orderId}")
 	public CompletableFuture<String> placeOrder(@PathVariable long orderId) {
 		
+		
 		System.out.println("Order received " + orderId);
 		
+		orderService.validateUser(orderId);
 		
 		return paymentClient.processPayment(orderId)
 			.thenApply(result -> "Order ID: " + orderId + " | " + result);

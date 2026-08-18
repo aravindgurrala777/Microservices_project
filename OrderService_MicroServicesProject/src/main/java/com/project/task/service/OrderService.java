@@ -5,12 +5,14 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.ResourceAccessException;
 import org.springframework.web.client.RestTemplate;
 
 import com.project.task.dto.OrderResponseDto;
 import com.project.task.dto.UserDto;
 import com.project.task.entity.Order;
 import com.project.task.exception.ResourceNotFoundException;
+import com.project.task.exception.UserServiceUnavaliableException;
 
 @Service
 public class OrderService {
@@ -44,15 +46,46 @@ public class OrderService {
 		 }
 		 
 		 
-		// String userServiceUrl = "http://localhost:9090/task/user/" + order.getUserId();
+		 UserDto userDto = getUser(order.getUserId());
 		 
-		 String userServiceUrl = userServiceBaseUrl + "/task/user/" + order.getUserId();
-		 UserDto userDto = restTemplate.getForObject(userServiceUrl, UserDto.class);
-		 
-		 
-		 return new OrderResponseDto(  order.getId() , order.getProduct() , order.getAmount() , userDto);
+		 return new OrderResponseDto( order.getId() , order.getProduct() , order.getAmount() , userDto );
 		 
 	}
+		 
+		 
+		
 	
+	
+	public UserDto validateUser(Long orderId) {
+		
+	      Order order = orderMap.get(orderId);
+	      
+	      if(order == null) {
+	    	  
+	    	  throw new ResourceNotFoundException("order not found with id: "+ orderId);
+	      }
+	      
+	      return getUser(order.getUserId());
+	      
+		
+	}
+	
+	 private UserDto getUser(Long userId) {
+		 try {
+		 
+			// String userServiceUrl = "http://localhost:9090/task/user/" + order.getUserId();
+			 
+		 String userServiceUrl = userServiceBaseUrl + "/task/user/" + userId;
+		 
+		  return restTemplate.getForObject(userServiceUrl, UserDto.class);
+		 
+	}
+	catch(ResourceAccessException e) {
+		
+		throw new UserServiceUnavaliableException("User Service is Unavaliable.Order Cannot be placed... Please try again later", e);
+		
+	}
+		 
+ }
 	
 }

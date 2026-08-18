@@ -1,5 +1,8 @@
 package com.project.task.exception;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -52,6 +55,19 @@ public class GlobalExceptionHandler {
 		ErrorResponseDto error = new ErrorResponseDto(HttpStatus.SERVICE_UNAVAILABLE.value(), "Service Unavaliable", ex.getMessage(), request.getRequestURI());
 		
 		return new ResponseEntity(error, HttpStatus.SERVICE_UNAVAILABLE);
+	}
+	
+	@ExceptionHandler(UserServiceUnavaliableException.class)
+	public ResponseEntity<Map<String, Object>> handleUserServiceUnavaliable(UserServiceUnavaliableException ex){
+		
+		Map<String, Object> response = new HashMap<>();
+		
+		response.put("status", 503);
+		response.put("error", "User_Service_Unavaliable");
+		response.put("message", ex.getMessage());
+		
+		return ResponseEntity.status(HttpStatus.SERVICE_UNAVAILABLE).body(response);
+		
 	}
 	
 	
