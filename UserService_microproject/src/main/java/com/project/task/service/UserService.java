@@ -26,11 +26,14 @@ public class UserService {
 		
 	}
 	
+	
+	
 	public Optional<UserDto> getUserById(Long id){
+		
 		
 		User user = userMap.get(id);
 		
-		if(user == null) {
+		if(user == null ) {
 			
 			throw new ResourceNotFoundException("User not found with id: " + id);
 		}

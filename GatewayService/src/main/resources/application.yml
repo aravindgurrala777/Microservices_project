@@ -7,24 +7,24 @@ spring:
 
   cloud:
     discovery:
-      enabled: false
+      enabled: true
 
     gateway:
       server:
         webflux:
           routes:
             - id: user-service
-              uri: http://localhost:9090
+              uri: lb://user-service
               predicates:
                 - Path=/task/user/**
 
             - id: order-service
-              uri: http://localhost:9091
+              uri: lb://order-service
               predicates:
                 - Path=/task/order/**
          
             - id: payment-service
-              uri: http://localhost:9092
+              uri: lb://payment-service
               predicates:
                 - Path=/task/payment/**		
 

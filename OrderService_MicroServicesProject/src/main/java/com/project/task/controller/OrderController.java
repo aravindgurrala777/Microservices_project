@@ -3,6 +3,7 @@ package com.project.task.controller;
 import java.util.concurrent.CompletableFuture;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -20,6 +21,11 @@ public class OrderController {
 	@Autowired
 	private OrderService orderService;
 	
+	@Value("${order.message:NOT FOUNDED}")
+	private String message;
+	
+	@Value("${app.environment:NOT FOUND}")
+	private String environment;
 
 	private final PaymentClient paymentClient;
 	
@@ -55,5 +61,16 @@ public class OrderController {
 			.thenApply(result -> "Order ID: " + orderId + " | " + result);
             	
 	}
+	
+	@GetMapping("/message")
+	public String message() {
+		return message;
+	}
+	
+	@GetMapping("/environment")
+	public String environment() {
+		return environment;
+	}
+	
 	
 }

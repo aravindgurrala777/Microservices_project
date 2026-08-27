@@ -12,7 +12,7 @@ public class PaymentService {
 		
 		
 		System.out.println("Payment Processing started for order : " + orderId + " at " + LocalDateTime.now());
-		Thread.sleep(10000);
+	//	Thread.sleep(10000);
 		System.out.println("Payment Processing finished for Order " + orderId + " at " + LocalDateTime.now());
 		
 		return "Payment Sucsess for Order: " + orderId ;
