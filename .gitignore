@@ -1,29 +1,36 @@
-# Maven
-target/
-!.mvn/wrapper/maven-wrapper.jar
+# DB
 
-# Spring Boot
+**/data/
+
+*.mv.db
+
+*.trace.db
+
+*.db
+
+# Java
+
+target/
+
+*.class
+
+*.jar
+
 *.log
 
 # IDE
-.classpath
-.project
-.settings/
-.springBeans
-.sts4-cache/
 
-# IntelliJ
+.settings/
+
+.classpath
+
+.project
+
+.factorypath
+
+.springBeans
+
 .idea/
+
 *.iml
 
-# VS Code
-.vscode/
-
-# OS
-.DS_Store
-Thumbs.db
-
-# Environment / secrets
-.env
-application-local.properties
-application-local.yml

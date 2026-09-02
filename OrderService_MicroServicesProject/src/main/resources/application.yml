@@ -1,5 +1,11 @@
 server:
   port: 9091
+spring:
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          secret-key: mysecretkeymysecretkeymysecretkey1234567890mysecretkey    
 resilience4j:
 
   circuitbreaker:
@@ -33,6 +39,8 @@ resilience4j:
 
 logging:
   level:
+    root: INFO
+    com.project.task: DEBUG
     io.github.resilience4j.retry: DEBUG
     io.github.resilience4j.circuitbreaker: DEBUG
     io.github.resilience4j.timelimiter: DEBUG

@@ -5,30 +5,38 @@ spring:
   application:
     name: gateway-service
 
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          secret-key: mysecretkeymysecretkeymysecretkey1234567890mysecretkey
+
   cloud:
-    discovery:
-      enabled: true
-
     gateway:
-      server:
-        webflux:
-          routes:
-            - id: user-service
-              uri: lb://user-service
-              predicates:
-                - Path=/task/user/**
+      routes:
 
-            - id: order-service
-              uri: lb://order-service
-              predicates:
-                - Path=/task/order/**
-         
-            - id: payment-service
-              uri: lb://payment-service
-              predicates:
-                - Path=/task/payment/**		
+        - id: auth-service
+          uri: lb://auth-service
+          predicates:
+            - Path=/task/auth/**
+
+        - id: user-service
+          uri: lb://user-service
+          predicates:
+            - Path=/task/user/**
+
+        - id: order-service
+          uri: lb://order-service
+          predicates:
+            - Path=/task/order/**
+
+        - id: payment-service
+          uri: lb://payment-service
+          predicates:
+            - Path=/task/payment/**
 
 logging:
   level:
     org.springframework.cloud.gateway: DEBUG
+    org.springframework.cloud.loadbalancer: DEBUG
     reactor.netty.http.client: DEBUG
